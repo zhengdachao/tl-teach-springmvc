@@ -1,12 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tl</groupId>
-    <artifactId>tuling-teach-git</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<groupId>com.tl</groupId>
+	<artifactId>tuling-teach-git</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>releases</name>
+			<url>http://192.168.119.129:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>http://192.168.119.129:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<!-- 修改compiler 插件已设置jre 源码版本和编译版本 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<!-- 生成一个源码包 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attache-source</id>
+						<!-- 什么时间?生命周期的阶段 -->
+						<phase>verify</phase>
+						<goals>
+							<!-- 目标 干什么事情 -->
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-rar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<includeJar>false</includeJar>
+				</configuration>
+				<executions>
+					<execution>
+						<id>buildRar</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>rar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20</version>
+				<configuration>
+					<includes>
+						<!-- <include>**/Test*.java</include> -->
+						<!-- <include>**/*Test.java</include> -->
+						<!-- <include>**/*Tests.java</include> -->
+						<!-- <include>**/*TestCase.java</include> -->
+						<include>**/*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.30</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<driver>com.mysql.jdbc.Driver</driver>
+					<url>jdbc:mysql://127.0.0.1:3306/taotao</url>
+					<username>root</username>
+					<password>root</password>
+				</configuration>
+
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<!--DDl -->
+							<sqlCommand>drop database yourdb</sqlCommand>
+							<!-- SQL文件 -->
+							<srcFiles>
+								<srcFile>src/main/sql/your-schema.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 
 </project>
