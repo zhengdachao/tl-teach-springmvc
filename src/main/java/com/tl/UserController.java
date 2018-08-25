@@ -20,11 +20,4 @@ public class UserController {
     public void updateUser() {
         System.out.println("更新用户");
     }
-    /**
-     * 
-     * @Description TODO(删除用户)
-     */
-    public void delete() {
-    	System.out.println("删除用户");
-    }
 }
