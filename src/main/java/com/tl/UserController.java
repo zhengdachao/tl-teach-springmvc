@@ -17,7 +17,14 @@ public class UserController {
     /**
      * 添加更新的方法
      */
-    public void update() {
-
+    public void updateUser() {
+        System.out.println("更新用户");
+    }
+    /**
+     * 
+     * @Description TODO(删除用户)
+     */
+    public void delete() {
+    	
     }
 }
