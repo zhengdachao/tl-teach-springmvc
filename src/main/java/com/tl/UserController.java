@@ -14,12 +14,12 @@ public class UserController {
 
 	}
 
-	/**
-	 * 添加更新的方法
-	 */
-	public void updateUser() {
-		System.out.println("更新用户的功能");
-		// 逻辑操作
-		// 未完成的功能
-	}
+    /**
+     * 添加更新的方法
+     */
+    public void updateUser() {
+        System.out.println("更新用户");
+        // 逻辑操作
+        // 未完成的功能
+    }
 }
