@@ -25,6 +25,6 @@ public class UserController {
      * @Description TODO(删除用户)
      */
     public void delete() {
-    	System.out.println("修改用户");
+    	System.out.println("删除用户");
     }
 }
